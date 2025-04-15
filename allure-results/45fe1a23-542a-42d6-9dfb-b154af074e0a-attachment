@@ -1,0 +1,67 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login Page Tests >> To verify if organizer able to create event & publish or not 
+- Location: D:\Fitpage Assignment\src\tests\createEventScenario.spec.ts:22:7
+
+# Error details
+
+```
+Error: locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed
+Call log:
+  - waiting for locator('//*[contains(@data-testid,"sort-by-button")]//span[contains(text(),"1")]/../../..//div[contains(@class,"line-clamp-2")]')
+
+    at indiaRunningStagingPage.visibilityOfEventName (D:\Fitpage Assignment\src\webPages\indiaRunningStagingPage.ts:27:79)
+    at D:\Fitpage Assignment\src\tests\createEventScenario.spec.ts:58:29
+```
+
+# Test source
+
+```ts
+   1 | import { Page } from "playwright";
+   2 | import indiaRunningStagingPageLocator from "../webLocators/indiaRunningStagingPage.Locator";
+   3 | import { delay } from "../constants/URL";
+   4 | import { PlayBasePage } from "../constants/PlayBasePage";
+   5 |
+   6 | export class indiaRunningStagingPage extends PlayBasePage
+   7 | {
+   8 |   constructor(page: Page) {
+   9 |     super(page);
+  10 |   }
+  11 |
+  12 |   async searchEvent(event: string):Promise<void>{
+  13 |   await this.page.isVisible(indiaRunningStagingPageLocator.searchEventBar)
+  14 |   await this.page.isEnabled(indiaRunningStagingPageLocator.searchEventBar)
+  15 |   await this.page.fill(indiaRunningStagingPageLocator.searchEventBar, event)
+  16 |   await this.page.keyboard.press('Enter')
+  17 |   await delay(5000)
+  18 |   }
+  19 |
+  20 |   async waitingTillOnlyOneElementShouldVisibleOnUI():Promise<void>{
+  21 |     await this.page.isVisible(indiaRunningStagingPageLocator.oneEventFound)
+  22 |     await this.page.click(indiaRunningStagingPageLocator.oneEventFound)
+  23 |   }
+  24 |
+  25 |   async visibilityOfEventName():Promise<String|null>{
+  26 |     await this.page.isVisible(indiaRunningStagingPageLocator.extractEventTitle)
+> 27 |     await this.page.locator(indiaRunningStagingPageLocator.extractEventTitle).scrollIntoViewIfNeeded();
+     |                                                                               ^ Error: locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed
+  28 |     let expectedEventName = await this.page.textContent(indiaRunningStagingPageLocator.extractEventTitle)
+  29 |     await this.page.click(indiaRunningStagingPageLocator.extractEventTitle)
+  30 |     return expectedEventName;
+  31 |   }
+  32 |
+  33 |   async visibilityOfEventOnEventPage():Promise<String|null>{
+  34 |     await this.page.isVisible(indiaRunningStagingPageLocator.getEvent)
+  35 |     let getEventName = await this.page.textContent(indiaRunningStagingPageLocator.getEvent)
+  36 |     await this.page.click(indiaRunningStagingPageLocator.getEvent)
+  37 |     return getEventName;
+  38 |   }
+  39 |
+  40 | }
+```
