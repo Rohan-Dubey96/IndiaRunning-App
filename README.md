@@ -24,3 +24,7 @@ npx playwright test ./src/tests/createEventScenario.spec --project="Frontend Tes
 
 For execute for cross browser execution just hitted this below command -
 npx playwright test ./src/tests/createEventScenario.spec --headed
+
+For Allure Report Genaration command -
+allure serve allure-results
+![image](https://github.com/user-attachments/assets/c4077024-423e-4002-a78e-cb1911198622)
