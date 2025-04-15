@@ -19,3 +19,8 @@ Setup Playwright Browser Dependencies : -
 
 npx playwright install
 
+For execute any browser specific test command - 
+npx playwright test ./src/tests/createEventScenario.spec --project="Frontend Tests [Positive + Negative] by chromium" --headed
+
+For execute for cross browser execution just hitted this below command -
+npx playwright test ./src/tests/createEventScenario.spec --headed
